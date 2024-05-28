@@ -186,3 +186,30 @@ footer nav ul {
 	margin: 2em
 }
 
+
+
+
+
+.formulaire{
+	display: flex;
+	margin-bottom: 35px;
+	gap: 1em;
+	justify-content: center;
+}
+.formulaire li{
+	padding: 1em;
+    border-radius: 30px;
+	border: solid 2px #1c6c0e;
+	padding: 10px 20px;
+
+	font-size: 17px;
+	font-weight: bold;
+	font-family: 'Syne';
+	color: #1c6c0e;
+}
+.formulaire li:hover{
+	cursor: pointer;
+	background-color: #1c6c0e;
+	color: white;
+}
+
