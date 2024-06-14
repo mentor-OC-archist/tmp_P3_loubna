@@ -1,0 +1,8 @@
+#error{
+	background: pink;
+	color: red;
+	padding: 8px;
+	border: solid 1px;
+	margin-bottom: -20px;
+	display: none;
+}

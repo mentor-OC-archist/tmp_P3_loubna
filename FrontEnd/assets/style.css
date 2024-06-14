@@ -137,36 +137,40 @@ li:hover {
 	width: 100%;
 
 }
-#contact {
+#formSection {
 	width: 50%;
 margin: auto;
 }
-#contact > * {
+#formSection > * {
 	text-align: center;
 
 }
-#contact h2{
+#formSection h2{
 	margin-bottom: 20px;
 }
-#contact form {
+#formSection form {
 	text-align: left;
 	margin-top:30px;
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input {
+#formSection input {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	padding-left: 10px;
+	padding-right: 10px;
 }
-#contact label {
+#formSection label {
 	margin: 2em 0 1em 0;
 }
-#contact textarea {
+#formSection textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 input[type="submit"]{
@@ -213,3 +217,7 @@ footer nav ul {
 	color: white;
 }
 
+a[href="login.html"]{
+	text-decoration: none;
+	color: black;
+}
