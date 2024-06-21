@@ -1,4 +1,5 @@
-let jsonList, gallery = document.querySelector('#portfolio .gallery');
+let jsonList, gallery = document.querySelector('#portfolio .gallery'), dialogBoxGallery = document.querySelector('#dialogBox .gallery');
+const authToken = localStorage.getItem('authToken');
 (function () {
     fetch('http://localhost:5678/api/works')
         .then(response => {
@@ -11,8 +12,7 @@ let jsonList, gallery = document.querySelector('#portfolio .gallery');
         .then(list => {
             jsonList = list;
             console.log(jsonList); // Utiliser les données reçues
-            gallery.innerHTML = getHtmlList(jsonList);
-
+            dialogBoxGallery.innerHTML = gallery.innerHTML = getHtmlList(jsonList);
         })
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
@@ -27,19 +27,19 @@ function getHtmlList(list) {
     return htmlList;
 }
 
-function filter(nbrCategory = null){
-    if(nbrCategory){
-    let htmlList = '';
+function filter(nbrCategory = null) {
+    if (nbrCategory) {
+        let htmlList = '';
         jsonList.forEach(item => {
-            if(item.categoryId == nbrCategory) htmlList += getHtmlItem(item);
+            if (item.categoryId == nbrCategory) htmlList += getHtmlItem(item);
         });
         gallery.innerHTML = htmlList;
     } else {
-        gallery.innerHTML = getHtmlList(jsonList); 
+        gallery.innerHTML = getHtmlList(jsonList);
     }
 }
 
-function getHtmlItem(item){
+function getHtmlItem(item) {
     return `
     <figure>
         <img src="${item.imageUrl}" alt="${item.title}">
@@ -48,10 +48,33 @@ function getHtmlItem(item){
     `;
 }
 
+window.addEventListener('load', () => {
+    if (authToken){
+        document.getElementById('log').innerHTML = '<a href="" target="_blank">logout</a>';
+        document.querySelector('#portfolio > div aside').style.display = 'block';
+    }
+    else
+        document.getElementById('log').innerHTML = '<a href="login.html" target="_blank">login</a>';
+});
+
+let openModal = function (){
+    document.querySelector('#dialogBack').style.display = 'block';
+    document.querySelector('#dialogBox').style.display = 'block';
+},
+closeModal = function (){
+    document.querySelector('#dialogBox').style.display = 'none';
+    document.querySelector('#dialogBack').style.display = 'none';
+}
+document.querySelector('#portfolio > div aside').addEventListener('click', openModal);
+document.querySelector('#close').addEventListener('click', closeModal);
+
+
 
 // Attach event listeners to the list items
 document.getElementById('filter-all').addEventListener('click', () => filter());
 document.getElementById('filter-objects').addEventListener('click', () => filter(1));
 document.getElementById('filter-apartments').addEventListener('click', () => filter(2));
 document.getElementById('filter-hotels').addEventListener('click', () => filter(3));
+
+
 

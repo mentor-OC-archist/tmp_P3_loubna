@@ -1,8 +1,8 @@
 let email, motdepasse;
 const errorElement = document.getElementById('error'); // obtenir le block d'erreur (par  défaut est none)
 
-//pour désaficher  le msg  d'erreur  à chaque évenement keyup  sur le  formulaire 
-document.getElementById('loginForm').addEventListener('keyup', function(event){
+//pour disaficher  le msg  d'erreur  à chaque évenement keyup  sur le  formulaire 
+document.getElementById('loginForm').addEventListener('focusin', function(event){
     errorElement.style.display = 'none';
 });
 
@@ -28,7 +28,7 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
                 //si data reçu => reponnse correcte
                 // ....
                 // stocker le token d'authentification pour pouvoir réaliser les envois et suppressions de travaux. 
-                document.cookie = "token=" + data.token + "; path=/; secure; HttpOnly; SameSite=Strict";
+                localStorage.setItem('authToken', data.token);
                 //redirectio vers page  d'accuiel
                 window.location.href = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + '/index.html';
             })
