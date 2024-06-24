@@ -1,4 +1,8 @@
-let jsonList, gallery = document.querySelector('#portfolio .gallery'), dialogBoxGallery = document.querySelector('#dialogBox .gallery');
+let jsonList
+, gallery = document.querySelector('#portfolio .gallery')
+, dialogBoxGallery = document.querySelector('#dialogBox .gallery');
+
+
 const authToken = localStorage.getItem('authToken');
 (function () {
     fetch('http://localhost:5678/api/works')
@@ -13,6 +17,28 @@ const authToken = localStorage.getItem('authToken');
             jsonList = list;
             console.log(jsonList); // Utiliser les données reçues
             dialogBoxGallery.innerHTML = gallery.innerHTML = getHtmlList(jsonList);
+
+            const modalFigures = document.querySelectorAll("#dialogBox figure")
+            console.log(modalFigures)
+            modalFigures.forEach((item,i) => {
+                console.log(item.querySelector('i.fa'))
+                item.querySelector('i.fa').addEventListener('click', e => {
+                    const tmp = e.target.closest("figure")
+                    , ls = localStorage.authToken
+
+                    console.log(ls)
+                    
+                    fetch("http://localhost:5678/api/works/"+tmp.dataset.id, {
+                        method: "DELETE"
+                        , headers: {"Authorization": "Bearer "+ls}
+                    })
+                        .then(json => json.json())
+                        .then(data => {
+                            console.log("okok deleted")
+                        })
+                        .catch()
+                })
+            })
         })
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
@@ -41,9 +67,10 @@ function filter(nbrCategory = null) {
 
 function getHtmlItem(item) {
     return `
-    <figure>
+    <figure data-id="${item.id}">
         <img src="${item.imageUrl}" alt="${item.title}">
         <figcaption>${item.title}</figcaption>
+        <i class="fa fa-trash"></i>
     </figure>
     `;
 }
@@ -52,9 +79,15 @@ window.addEventListener('load', () => {
     if (authToken){
         document.getElementById('log').innerHTML = '<a href="" target="_blank">logout</a>';
         document.querySelector('#portfolio > div aside').style.display = 'block';
+        document.querySelector('.formulaire').style.display = 'none';
+        document.getElementById('log').addEventListener('click', (item,i) => {
+            delete localStorage.authToken
+        })
     }
-    else
+    else{
         document.getElementById('log').innerHTML = '<a href="login.html" target="_blank">login</a>';
+        document.querySelector('.blackBackground').style.display = 'none';
+    }
 });
 
 let openModal = function (){
